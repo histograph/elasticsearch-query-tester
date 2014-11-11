@@ -15,7 +15,7 @@
       <span>Elasticsearch Query Tester</span>
       <select id="queries">
       </select>
-      <button id="run-query">Run query</button><div id="timing"></div>
+      <button id="run-query">Run query (⌘ + ⏎)</button><div id="timing"></div>
     </div>
     <div id="input">
       <div class="wrapper">
@@ -56,7 +56,14 @@
             lineNumbers: true,
             matchBrackets: true,
             tabSize: 2,
-            mode: "application/json"
+            mode: "application/json",
+            onKeyEvent: function(e , s) {
+              if (s.type == "keydown") {
+                if (s.metaKey && event.keyCode == 13) {
+                  runQuery();
+                }
+              }
+            }
         });
       }
 
@@ -66,7 +73,9 @@
         inputCm.setValue(JSON.stringify(query.query, null, 2));
       });
 
-      d3.select("#run-query").on("click", function() {
+      d3.select("#run-query").on("click", runQuery);
+
+      function runQuery() {
         var url = host + "/" + query.index + "/_search";
 
         var start = new Date().getTime();
@@ -78,7 +87,7 @@
 
               outputCm.setValue(JSON.stringify(JSON.parse(data.response), undefined, 2));
             });
-      });
+      }
     </script>
   </body>
 </html>
