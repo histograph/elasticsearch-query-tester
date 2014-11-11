@@ -1,0 +1,22 @@
+[
+  {
+    "description": "Documents named 'Amsterdam'",
+    "index": "pelias",
+    "query": {
+      "query": {
+        "filtered": {
+          "query": {
+            "query_string": {
+              "query": "amsterdam",
+              "fields": [
+                "name.default"
+              ],
+              "default_operator": "OR"
+            }
+          }
+        }
+      },
+      "size": 40
+    }
+  }
+]

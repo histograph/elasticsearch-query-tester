@@ -1,0 +1,55 @@
+body {
+  padding: 0;
+  margin: 0;
+  background-color: #f39c12;
+}
+
+#input, #output {
+  width: 50%;
+  bottom: 0;
+  top: 40px;
+  position: absolute;
+}
+
+#input {
+  left: 0;
+  right: 50%;
+}
+
+#output {
+  left: 50%;
+  right: 0;
+}
+
+#header {
+  top: 0;
+  height: 40px;
+  width: 100%;
+  position: absolute;
+  border-bottom: 1px solid #DDDDDD;
+  color: white;
+}
+
+#header, #queries {
+  font-size: 29px;
+  font-family: 'Lato', 'serif';
+}
+
+#timing {
+  margin-left: 20px;
+  display: inline;
+  font-size: 20px;
+}
+
+.wrapper {
+  top: 0;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+
+.CodeMirror {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 100%;
+}

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Elasticsearch Query Tester</title>
+    <meta charset="utf-8">
+    <meta name="viewport"content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="codemirror.css">
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="codemirror.min.js"></script>
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,700|Inconsolata" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <div id="header">
+      <span>Elasticsearch Query Tester</span>
+      <select id="queries">
+      </select>
+      <button id="run-query">Run query</button><div id="timing"></div>
+    </div>
+    <div id="input">
+      <div class="wrapper">
+        <textarea id="input-json">
+        </textarea>
+      </div>
+    </div>
+    <div id="output">
+      <div class="wrapper">
+        <textarea id="output-json">
+        </textarea>
+      </div>
+    </div>
+    <script>
+      var host = "",
+          query = {},
+          inputCm = makeTextArea(document.getElementById("input-json")),
+          outputCm = makeTextArea(document.getElementById("output-json"));
+
+      d3.json("config.json", function(error, json) {
+        host = json.host;
+      });
+
+      d3.json("queries.json", function(error, json) {
+        d3.select("#queries").selectAll("option")
+            .data(json)
+          .enter().append("option")
+            .html(function(d) {
+              return d.description;
+            });
+
+        query = json[0];
+        inputCm.setValue(JSON.stringify(query.query, null, 2));
+      });
+
+      function makeTextArea(e) {
+        return CodeMirror.fromTextArea(e, {
+            lineNumbers: true,
+            matchBrackets: true,
+            tabSize: 2,
+            mode: "application/json"
+        });
+      }
+
+      d3.select("#queries").on("input", function() {
+        var sel = document.getElementById('queries');
+        query = d3.select(sel.options[sel.selectedIndex]).datum();
+        inputCm.setValue(JSON.stringify(query.query, null, 2));
+      });
+
+      d3.select("#run-query").on("click", function() {
+        var url = host + "/" + query.index + "/_search";
+
+        var start = new Date().getTime();
+        d3.xhr(url)
+            .header("Content-Type", "application/json")
+            .post(JSON.stringify(JSON.parse(inputCm.getValue())), function(err, data) {
+              var end = new Date().getTime();
+              d3.select("#timing").html((end - start) + " ms");
+
+              outputCm.setValue(JSON.stringify(JSON.parse(data.response), undefined, 2));
+            });
+      });
+    </script>
+  </body>
+</html>
