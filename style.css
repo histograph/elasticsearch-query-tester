@@ -26,11 +26,8 @@ body {
   height: 40px;
   width: 100%;
   position: absolute;
-  border-bottom: 1px solid #DDDDDD;
+  border-bottom: 1px solid #ddd;
   color: white;
-}
-
-#header, #queries {
   font-size: 29px;
   font-family: 'Lato', 'serif';
 }
