@@ -1,7 +1,7 @@
 [
   {
     "description": "Documents named 'Amsterdam'",
-    "index": "pelias",
+    "index": "histograph",
     "query": {
       "query": {
         "filtered": {
@@ -9,7 +9,7 @@
             "query_string": {
               "query": "amsterdam",
               "fields": [
-                "source.name"
+                "pit.name"
               ],
               "default_operator": "OR"
             }
