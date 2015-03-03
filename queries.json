@@ -3,6 +3,7 @@
     "description": "Documents named 'Amsterdam'",
     "index": "histograph",
     "query": {
+      "_source": ["name", "hgid"],
       "query": {
         "filtered": {
           "query": {
@@ -16,7 +17,7 @@
           }
         }
       },
-      "size": 40
+      "size": 10
     }
   }
 ]
