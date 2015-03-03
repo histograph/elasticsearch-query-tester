@@ -1,6 +1,6 @@
 [
   {
-    "description": "Documents named 'Amsterdam'",
+    "description": "PiTs named 'Amsterdam'",
     "index": "histograph",
     "query": {
       "_source": ["name", "hgid"],
@@ -11,6 +11,26 @@
               "query": "amsterdam",
               "fields": [
                 "pit.name"
+              ],
+              "default_operator": "OR"
+            }
+          }
+        }
+      },
+      "size": 10
+    }
+  },
+  {
+    "description": "PiTs on layer 'tgn'",
+    "index": "histograph",
+    "query": {
+      "query": {
+        "filtered": {
+          "query": {
+            "query_string": {
+              "query": "tgn",
+              "fields": [
+                "pit.layer"
               ],
               "default_operator": "OR"
             }
