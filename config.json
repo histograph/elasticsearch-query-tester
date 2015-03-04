@@ -1,3 +1,4 @@
 {
-  "host": "http://localhost:9200"
+  "host": "http://localhost:9200",
+  "github": "https://github.com/histograph/esqt"
 }

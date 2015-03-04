@@ -16,6 +16,7 @@
       <select id="queries">
       </select>
       <button id="run-query">Run query (⌘ + ⏎)</button><div id="timing"></div>
+      <a id="edit-queries" href="#">Edit queries</a>
     </div>
     <div id="input">
       <div class="wrapper">
@@ -37,6 +38,9 @@
 
       d3.json("config.json", function(error, json) {
         host = json.host;
+
+        d3.select("#edit-queries")
+            .attr("href", json.github + "/edit/gh-pages/queries.json");
       });
 
       d3.json("queries.json", function(error, json) {
@@ -57,9 +61,9 @@
             matchBrackets: true,
             tabSize: 2,
             mode: "application/json",
-            onKeyEvent: function(e , s) {
+            onKeyEvent: function(e, s) {
               if (s.type == "keydown") {
-                if (s.metaKey && event.keyCode == 13) {
+                if (s.metaKey && s.keyCode == 13) {
                   runQuery();
                 }
               }
@@ -67,7 +71,8 @@
         });
       }
 
-      d3.select("#queries").on("input", function() {
+      d3.select("#queries").on("change", function() {
+        console.log("honden")
         var sel = document.getElementById('queries');
         query = d3.select(sel.options[sel.selectedIndex]).datum();
         inputCm.setValue(JSON.stringify(query.query, null, 2));
