@@ -7,7 +7,7 @@ body {
 #input, #output {
   width: 50%;
   bottom: 0;
-  top: 50px;
+  top: 55px;
   position: absolute;
 }
 
@@ -26,10 +26,13 @@ body {
   height: 50px;
   width: 100%;
   position: absolute;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 5px solid #ddd;
   color: white;
   font-size: 29px;
   font-family: 'Lato', 'serif';
+}
+
+.padding {
   padding: 5px 9px;
 }
 
