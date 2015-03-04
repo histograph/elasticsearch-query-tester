@@ -61,6 +61,7 @@
         return CodeMirror.fromTextArea(e, {
             lineNumbers: true,
             matchBrackets: true,
+            lineWrapping: true,
             tabSize: 2,
             mode: "application/json",
             onKeyEvent: function(e, s) {
@@ -74,7 +75,6 @@
       }
 
       d3.select("#queries").on("change", function() {
-        console.log("honden")
         var sel = document.getElementById('queries');
         query = d3.select(sel.options[sel.selectedIndex]).datum();
         inputCm.setValue(JSON.stringify(query.query, null, 2));
@@ -83,16 +83,41 @@
       d3.select("#run-query").on("click", runQuery);
 
       function runQuery() {
-        var url = host + "/" + query.index + "/_search";
+        var url = host + "/" + query.index + "/_search",
+            postData;
+        try {
+          postData = JSON.stringify(JSON.parse(inputCm.getValue()))
+        } catch (e) {
+          outputCm.setValue(JSON.stringify({
+            error: "Error parsing query",
+            message: e.message
+          }, undefined, 2));
+          return;
+        }
 
         var start = new Date().getTime();
         d3.xhr(url)
             .header("Content-Type", "application/json")
-            .post(JSON.stringify(JSON.parse(inputCm.getValue())), function(err, data) {
+            .post(postData, function(err, data) {
               var end = new Date().getTime();
               d3.select("#timing").html((end - start) + " ms");
 
-              outputCm.setValue(JSON.stringify(JSON.parse(data.response), undefined, 2));
+              if (err) {
+                var message;
+
+                try {
+                  message = JSON.parse(err.response).error;
+                } catch (e) {
+                  message = "Unknown error - is Elasticsearch running on " + host + "?";
+                }
+
+                outputCm.setValue(JSON.stringify({
+                  error: "Elasticsearch error",
+                  message: message
+                }, undefined, 2));
+              } else {
+                outputCm.setValue(JSON.stringify(JSON.parse(data.response), undefined, 2));
+              }
             });
       }
     </script>
