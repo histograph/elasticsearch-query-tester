@@ -11,8 +11,7 @@
               "query": "amsterdam",
               "fields": [
                 "pit.name"
-              ],
-              "default_operator": "OR"
+              ]
             }
           }
         }
@@ -24,7 +23,7 @@
     "description": "PiTs on layer 'tgn'",
     "index": "histograph",
     "query": {
-      "_source": ["name", "hgid"],
+      "_source": ["name", "hgid", "layer"],
       "query": {
         "filtered": {
           "query": {
@@ -32,13 +31,67 @@
               "query": "tgn",
               "fields": [
                 "pit.layer"
-              ],
-              "default_operator": "OR"
+              ]
             }
           }
         }
       },
       "size": 10
     }
+  },
+
+  {
+    "description": "PiTs near Baflo",
+    "index": "histograph",
+    "query": {
+      "_source": ["name", "hgid"],
+      "query": {
+        "filtered": {
+          "query": {
+            "match_all": {}
+          },
+          "filter": {
+            "geo_shape": {
+              "geometry": {
+                "shape": {
+                  "type": "envelope",
+                  "coordinates" : [[6.5030, 53.3698], [6.5390, 53.3475]]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+
+  {
+    "description": "PiTs between 1550 and 1650",
+    "index": "histograph",
+    "query": {
+      "_source": ["name", "hgid", "startDate", "endDate"],
+      "query":{
+        "range" : {
+          "startDate" : {
+            "lte" : "1650-01-01",
+            "boost" : 2.0
+          }
+        }
+      }
+    }
+  },
+
+  {
+    "description": "PiTs named like \"Amsteldam\"",
+    "index": "histograph",
+    "query": {
+      "_source": ["name", "hgid"],
+      "query":{
+        "fuzzy" : {
+          "name" : "Bassum"
+        }
+      }
+    }
   }
+
 ]
