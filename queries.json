@@ -24,6 +24,7 @@
     "description": "PiTs on layer 'tgn'",
     "index": "histograph",
     "query": {
+      "_source": ["name", "hgid"],
       "query": {
         "filtered": {
           "query": {
