@@ -66,15 +66,14 @@
   },
 
   {
-    "description": "PiTs between 1550 and 1650",
+    "description": "PiTs before 1550",
     "index": "histograph",
     "query": {
       "_source": ["name", "hgid", "startDate", "endDate"],
       "query":{
         "range" : {
           "startDate" : {
-            "lte" : "1650-01-01",
-            "boost" : 2.0
+            "lte" : "1550-01-01"
           }
         }
       }
@@ -82,13 +81,17 @@
   },
 
   {
-    "description": "PiTs named like \"Amsteldam\"",
+    "description": "PiTs named like \"Bussum\"",
     "index": "histograph",
     "query": {
       "_source": ["name", "hgid"],
       "query":{
-        "fuzzy" : {
-          "name" : "Bassum"
+        "match": {
+          "name": {
+            "query":     "Bussum",
+            "fuzziness": "AUTO",
+            "operator":  "and"
+          }
         }
       }
     }
