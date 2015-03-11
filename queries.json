@@ -100,11 +100,6 @@
     "query":     {
       "query": {
         "filtered": {
-          "filter": {
-            "term": {
-              "type": "hg:Area"
-            }
-          },
           "query": {
             "bool": {
               "must": [
@@ -114,6 +109,11 @@
                       "pit.name"
                     ],
                     "query": "heil*"
+                  }
+                },
+                {
+                  "term": {
+                    "type": "hg:Area"
                   }
                 }
               ]
