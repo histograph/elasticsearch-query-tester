@@ -23,20 +23,17 @@
     "description": "PiTs on layer 'tgn'",
     "index": "histograph",
     "query": {
-      "_source": ["name", "hgid", "layer"],
+      "_source": ["name", "hgid", "source"],
       "query": {
         "filtered": {
-          "query": {
-            "query_string": {
-              "query": "tgn",
-              "fields": [
-                "pit.layer"
-              ]
+          "filter": {
+            "term": {
+              "source": "tgn"
             }
           }
         }
       },
-      "size": 10
+      "size": 100
     }
   },
 
@@ -100,30 +97,31 @@
   {
     "description": "hg:Areas containing \"heil*\"",
     "index": "histograph",
-    "query": {
-      "_source": [
-        "name",
-        "hgid"
-      ],
+    "query":     {
       "query": {
-        "bool": {
-          "must": [
-            {
-              "query_string": {
-                "query": "heil*",
-                "fields": [
-                  "pit.name"
-                ]
-              }
-            },
-            {
-              "match": {
-                "type": "hg:Area"
-              }
+        "filtered": {
+          "filter": {
+            "term": {
+              "type": "hg:Area"
             }
-          ]
+          },
+          "query": {
+            "bool": {
+              "must": [
+                {
+                  "query_string": {
+                    "fields": [
+                      "pit.name"
+                    ],
+                    "query": "heil*"
+                  }
+                }
+              ]
+            }
+          }
         }
-      },
+      }
+    },
       "size": 100
     }
   }
