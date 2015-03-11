@@ -95,6 +95,37 @@
         }
       }
     }
+  },
+  
+  {
+    "description": "hg:Areas containing \"heil*\"",
+    "index": "histograph",
+    "query": {
+      "_source": [
+        "name",
+        "hgid"
+      ],
+      "query": {
+        "bool": {
+          "must": [
+            {
+              "query_string": {
+                "query": "heil*",
+                "fields": [
+                  "pit.name"
+                ]
+              }
+            },
+            {
+              "match": {
+                "type": "hg:Area"
+              }
+            }
+          ]
+        }
+      },
+      "size": 100
+    }
   }
 
 ]
