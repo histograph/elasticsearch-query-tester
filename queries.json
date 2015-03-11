@@ -112,7 +112,7 @@
                   }
                 },
                 {
-                  "term": {
+                  "match": {
                     "type": "hg:Area"
                   }
                 }
