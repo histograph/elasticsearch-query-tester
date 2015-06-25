@@ -1,7 +1,7 @@
 [
   {
     "description": "PiTs named 'Amsterdam'",
-    "index": "histograph",
+    "index": "*",
     "query": {
       "_source": ["name", "hgid"],
       "query": {
@@ -21,7 +21,7 @@
   },
   {
     "description": "PiTs on layer 'tgn'",
-    "index": "histograph",
+    "index": "*",
     "query": {
       "_source": ["name", "hgid", "source"],
       "query": {
@@ -39,7 +39,7 @@
 
   {
     "description": "PiTs near Baflo",
-    "index": "histograph",
+    "index": "*",
     "query": {
       "_source": ["name", "hgid"],
       "query": {
@@ -64,7 +64,7 @@
 
   {
     "description": "PiTs before 1550",
-    "index": "histograph",
+    "index": "*",
     "query": {
       "_source": ["name", "hgid", "startDate", "endDate"],
       "query":{
@@ -79,7 +79,7 @@
 
   {
     "description": "PiTs named like \"Bussum\"",
-    "index": "histograph",
+    "index": "*",
     "query": {
       "_source": ["name", "hgid"],
       "query":{
